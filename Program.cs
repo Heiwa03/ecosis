@@ -25,7 +25,28 @@ public class Planta : EntitateEcosistem
 
     public override void Actioneaza()
     {
-        // Logic for plant growth and reproduction
+        Creste();
+        Reproduce();
+    }
+
+    private void Creste()
+    {
+        // Logic for plant growth
+        Energie += 5; // Example: increase energy by 5 units
+        Console.WriteLine($"{Nume} a crescut si acum are energie {Energie}");
+    }
+
+    private void Reproduce()
+    {
+        // Logic for plant reproduction
+        if (Energie > 20) // Example: reproduce if energy is greater than 20
+        {
+            Energie -= 10; // Example: reduce energy by 10 units for reproduction
+            Console.WriteLine($"{Nume} s-a reprodus si acum are energie {Energie}");
+            // Add new plant to the ecosystem
+            var newPlanta = new Planta($"{Nume} Jr.", 10, Pozitie, RataSupravietuire);
+            Ecosistem.Instance.AdaugaEntitate(newPlanta);
+        }
     }
 }
 
@@ -119,16 +140,29 @@ public interface Interactiune
     void Reproduce();
 }
 
-// Ecosystem class
+// Singleton Ecosystem class to manage entities and simulate interactions
 public class Ecosistem
 {
+    private static Ecosistem instance;
     private List<EntitateEcosistem> entitati;
     private Random random;
 
-    public Ecosistem()
+    private Ecosistem()
     {
         entitati = new List<EntitateEcosistem>();
         random = new Random();
+    }
+
+    public static Ecosistem Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new Ecosistem();
+            }
+            return instance;
+        }
     }
 
     public void AdaugaEntitate(EntitateEcosistem entitate)
