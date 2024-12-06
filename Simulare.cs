@@ -2,21 +2,50 @@
 public class Simulare
 {
     private Ecosistem ecosistem;
+    private Random random;
 
     public Simulare()
     {
         ecosistem = Ecosistem.Instance;
+        random = new Random();
     }
 
     public void Initializeaza()
     {
-        // Add initial entities to the ecosystem
-        ecosistem.AdaugaEntitate(new Planta("Floare", 10, (0, 0), 0.8));
-        ecosistem.AdaugaEntitate(new Erbivor("IepureM", 15, (1, 1), 0.7, 5, "Masculin"));
-        ecosistem.AdaugaEntitate(new Erbivor("IepureF", 15, (4, 2), 0.7, 5, "Feminin"));
-        ecosistem.AdaugaEntitate(new Carnivor("LupM", 20, (2, 2), 0.6, 7, "Masculin"));
-        ecosistem.AdaugaEntitate(new Carnivor("LupF", 20, (2, 6), 0.6, 7, "Feminin"));
-        ecosistem.AdaugaEntitate(new Omnivor("Urs", 25, (3, 3), 0.9, 4, "Feminin"));
+        // Generate a random number of entities
+        int numPlante = random.Next(5, 15);
+        int numErbivori = random.Next(3, 10);
+        int numCarnivori = random.Next(2, 7);
+        int numOmnivori = random.Next(1, 5);
+
+        // Add plants
+        for (int i = 0; i < numPlante; i++)
+        {
+            ecosistem.AdaugaEntitate(new Planta($"Floare{i}", random.Next(5, 15), (random.Next(0, 10), random.Next(0, 10)), 0.8));
+        }
+
+        // Add herbivores
+        for (int i = 0; i < numErbivori; i++)
+        {
+            ecosistem.AdaugaEntitate(new Erbivor($"Iepure{i}", random.Next(10, 20), (random.Next(0, 10), random.Next(0, 10)), 0.7, 5, GetRandomGen()));
+        }
+
+        // Add carnivores
+        for (int i = 0; i < numCarnivori; i++)
+        {
+            ecosistem.AdaugaEntitate(new Carnivor($"Lup{i}", random.Next(15, 25), (random.Next(0, 10), random.Next(0, 10)), 0.6, 7, GetRandomGen()));
+        }
+
+        // Add omnivores
+        for (int i = 0; i < numOmnivori; i++)
+        {
+            ecosistem.AdaugaEntitate(new Omnivor($"Urs{i}", random.Next(20, 30), (random.Next(0, 10), random.Next(0, 10)), 0.9, 4, GetRandomGen()));
+        }
+    }
+
+    private string GetRandomGen()
+    {
+        return random.Next(0, 2) == 0 ? "Masculin" : "Feminin";
     }
 
     public void Ruleaza(int pasi)
