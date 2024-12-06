@@ -7,6 +7,7 @@ public class Ecosistem
     private static Ecosistem instance;
     private List<EntitateEcosistem> entitati;
     private Random random;
+    private Logger logger;
 
     public static List<string> PlantNames = new List<string> { "Floare", "Iarbă", "Copac", "Tufă" };
     public static List<string> HerbivoreNames = new List<string> { "Iepure", "Cerb", "Caprioară" };
@@ -17,6 +18,7 @@ public class Ecosistem
     {
         entitati = new List<EntitateEcosistem>();
         random = new Random();
+        logger = new Logger();
     }
 
     public static Ecosistem Instance
@@ -34,11 +36,13 @@ public class Ecosistem
     public void AdaugaEntitate(EntitateEcosistem entitate)
     {
         entitati.Add(entitate);
+        logger.LogAction("Added", entitate.Pozitie, entitate.Nume);
     }
 
     public void EliminaEntitate(EntitateEcosistem entitate)
     {
         entitati.Remove(entitate);
+        logger.LogAction("Removed", entitate.Pozitie, entitate.Nume);
     }
 
     public EntitateEcosistem GetEntitateAtPosition((int x, int y) pozitie)
@@ -148,5 +152,10 @@ public class Ecosistem
         {
             Console.WriteLine($"{entitate.Nume} la pozitia ({entitate.Pozitie.x}, {entitate.Pozitie.y}) cu energie {entitate.Energie}");
         }
+    }
+
+    public void PlotData()
+    {
+        logger.PlotData();
     }
 }
