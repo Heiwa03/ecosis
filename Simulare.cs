@@ -54,7 +54,7 @@ public class Simulare
         {
             Console.WriteLine($"Pasul {i + 1}:");
             ecosistem.SimuleazaPas();
-            if (i % skip == 0)
+            if (i % skip == 1)
             {
                 ecosistem.AfiseazaStare();
                 Console.WriteLine();
