@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 // Simulation class to manage the simulation process
 public class Simulare
 {
@@ -12,34 +15,21 @@ public class Simulare
 
     public void Initializeaza()
     {
-        // Generate a random number of entities
-        int numPlante = random.Next(5, 15);
-        int numErbivori = random.Next(3, 10);
-        int numCarnivori = random.Next(2, 7);
-        int numOmnivori = random.Next(1, 5);
+        // Generate entities
+        GenerateEntities<Planta>(5, 15, Ecosistem.PlantNames, (name, position) => new Planta(name, random.Next(5, 15), position, 0.8));
+        GenerateEntities<Erbivor>(3, 10, Ecosistem.HerbivoreNames, (name, position) => new Erbivor(name, random.Next(10, 20), position, 0.7, 5, GetRandomGen()));
+        GenerateEntities<Carnivor>(2, 7, Ecosistem.CarnivoreNames, (name, position) => new Carnivor(name, random.Next(15, 25), position, 0.6, 7, GetRandomGen()));
+        GenerateEntities<Omnivor>(1, 5, Ecosistem.OmnivoreNames, (name, position) => new Omnivor(name, random.Next(20, 30), position, 0.9, 4, GetRandomGen()));
+    }
 
-        // Add plants
-        for (int i = 0; i < numPlante; i++)
+    private void GenerateEntities<T>(int minCount, int maxCount, List<string> names, Func<string, (int, int), T> createEntity) where T : EntitateEcosistem
+    {
+        int count = random.Next(minCount, maxCount);
+        for (int i = 0; i < count; i++)
         {
-            ecosistem.AdaugaEntitate(new Planta($"Floare{i}", random.Next(5, 15), (random.Next(0, 10), random.Next(0, 10)), 0.8));
-        }
-
-        // Add herbivores
-        for (int i = 0; i < numErbivori; i++)
-        {
-            ecosistem.AdaugaEntitate(new Erbivor($"Iepure{i}", random.Next(10, 20), (random.Next(0, 10), random.Next(0, 10)), 0.7, 5, GetRandomGen()));
-        }
-
-        // Add carnivores
-        for (int i = 0; i < numCarnivori; i++)
-        {
-            ecosistem.AdaugaEntitate(new Carnivor($"Lup{i}", random.Next(15, 25), (random.Next(0, 10), random.Next(0, 10)), 0.6, 7, GetRandomGen()));
-        }
-
-        // Add omnivores
-        for (int i = 0; i < numOmnivori; i++)
-        {
-            ecosistem.AdaugaEntitate(new Omnivor($"Urs{i}", random.Next(20, 30), (random.Next(0, 10), random.Next(0, 10)), 0.9, 4, GetRandomGen()));
+            string name = names[random.Next(names.Count)];
+            var position = (random.Next(0, 10), random.Next(0, 10));
+            ecosistem.AdaugaEntitate(createEntity(name, position));
         }
     }
 
@@ -56,7 +46,7 @@ public class Simulare
             ecosistem.SimuleazaPas();
             if (i % skip == 0)
             {
-                //ecosistem.AfiseazaStare();
+                ecosistem.AfiseazaStare();
                 Console.WriteLine();
             }
         }

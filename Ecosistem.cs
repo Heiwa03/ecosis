@@ -8,10 +8,10 @@ public class Ecosistem
     private List<EntitateEcosistem> entitati;
     private Random random;
 
-    private static List<string> plantNames = new List<string> { "Floare", "Iarbă", "Copac", "Tufă" };
-    private static List<string> herbivoreNames = new List<string> { "Iepure", "Cerb", "Caprioară" };
-    private static List<string> carnivoreNames = new List<string> { "Lup", "Leu", "Tigru" };
-    private static List<string> omnivoreNames = new List<string> { "Urs", "Porc", "Câine" };
+    public static List<string> PlantNames = new List<string> { "Floare", "Iarbă", "Copac", "Tufă" };
+    public static List<string> HerbivoreNames = new List<string> { "Iepure", "Cerb", "Caprioară" };
+    public static List<string> CarnivoreNames = new List<string> { "Lup", "Leu", "Tigru" };
+    public static List<string> OmnivoreNames = new List<string> { "Urs", "Porc", "Câine" };
 
     private Ecosistem()
     {
@@ -59,12 +59,12 @@ public class Ecosistem
 
     private void EvenimenteAleatorii()
     {
-        int eveniment = random.Next(0, 4000);
+        int eveniment = random.Next(0, 100);
         if (eveniment < 10)
         {
             Console.WriteLine("Furtuna a lovit ecosistemul!");
             // Logic for storm event
-            int numEntitiesToKill = random.Next(0, entitati.Count / 2);
+            int numEntitiesToKill = random.Next(0, entitati.Count + 1);
             for (int i = 0; i < numEntitiesToKill; i++)
             {
                 if (entitati.Count == 0) break;
@@ -78,7 +78,7 @@ public class Ecosistem
         {
             Console.WriteLine("Seceta a lovit ecosistemul!");
             // Logic for drought event
-            int numEntitiesToKill = random.Next(0, entitati.Count / 2);
+            int numEntitiesToKill = random.Next(0, entitati.Count + 1);
             for (int i = 0; i < numEntitiesToKill; i++)
             {
                 if (entitati.Count == 0) break;
@@ -88,7 +88,7 @@ public class Ecosistem
                 EliminaEntitate(entity);
             }
         }
-        else if (eveniment < 200)
+        else if (eveniment < 30)
         {
             Console.WriteLine("O nouă specie a apărut în ecosistem!");
             // Logic for new species event
@@ -104,19 +104,19 @@ public class Ecosistem
         switch (specieType)
         {
             case 0:
-                string plantName = plantNames[random.Next(plantNames.Count)];
+                string plantName = PlantNames[random.Next(PlantNames.Count)];
                 newEntity = new Planta(plantName, random.Next(5, 15), (random.Next(0, 10), random.Next(0, 10)), 0.8);
                 break;
             case 1:
-                string herbivoreName = herbivoreNames[random.Next(herbivoreNames.Count)];
+                string herbivoreName = HerbivoreNames[random.Next(HerbivoreNames.Count)];
                 newEntity = new Erbivor(herbivoreName, random.Next(10, 20), (random.Next(0, 10), random.Next(0, 10)), 0.7, 5, GetRandomGen());
                 break;
             case 2:
-                string carnivoreName = carnivoreNames[random.Next(carnivoreNames.Count)];
+                string carnivoreName = CarnivoreNames[random.Next(CarnivoreNames.Count)];
                 newEntity = new Carnivor(carnivoreName, random.Next(15, 25), (random.Next(0, 10), random.Next(0, 10)), 0.6, 7, GetRandomGen());
                 break;
             case 3:
-                string omnivoreName = omnivoreNames[random.Next(omnivoreNames.Count)];
+                string omnivoreName = OmnivoreNames[random.Next(OmnivoreNames.Count)];
                 newEntity = new Omnivor(omnivoreName, random.Next(20, 30), (random.Next(0, 10), random.Next(0, 10)), 0.9, 4, GetRandomGen());
                 break;
         }
