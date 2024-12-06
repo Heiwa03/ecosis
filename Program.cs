@@ -9,6 +9,6 @@ class Program
     {
         Simulare simulare = new Simulare();
         simulare.Initializeaza();
-        simulare.Ruleaza(100); // Run the simulation for 10 steps
+        simulare.Ruleaza(1000); // Run the simulation for 10 steps
     }
 }
