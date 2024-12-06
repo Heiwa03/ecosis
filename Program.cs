@@ -55,12 +55,14 @@ public abstract class Animal : EntitateEcosistem
 {
     public int Viteza { get; set; }
     public string TipHrana { get; set; }
+    public string Gen { get; set; }
 
-    public Animal(string nume, int energie, (int x, int y) pozitie, double rataSupravietuire, int viteza, string tipHrana)
+    public Animal(string nume, int energie, (int x, int y) pozitie, double rataSupravietuire, int viteza, string tipHrana, string gen)
         : base(nume, energie, pozitie, rataSupravietuire)
     {
         Viteza = viteza;
         TipHrana = tipHrana;
+        Gen = gen;
     }
 
     public abstract void Mananca();
@@ -70,66 +72,103 @@ public abstract class Animal : EntitateEcosistem
 // Herbivore class
 public class Erbivor : Animal
 {
-    public Erbivor(string nume, int energie, (int x, int y) pozitie, double rataSupravietuire, int viteza)
-        : base(nume, energie, pozitie, rataSupravietuire, viteza, "Plante") { }
+    public Erbivor(string nume, int energie, (int x, int y) pozitie, double rataSupravietuire, int viteza, string gen)
+        : base(nume, energie, pozitie, rataSupravietuire, viteza, "Plante", gen) { }
 
     public override void Actioneaza()
     {
-        // Logic for herbivore actions
+        Mananca();
+        Deplaseaza();
     }
 
     public override void Mananca()
     {
-        // Logic for eating plants
+        var planta = Ecosistem.Instance.GetEntitateAtPosition(Pozitie) as Planta;
+        if (planta != null)
+        {
+            Energie += planta.Energie;
+            Ecosistem.Instance.EliminaEntitate(planta);
+            Console.WriteLine($"{Nume} a mancat {planta.Nume} si acum are energie {Energie}");
+        }
     }
 
     public override void Deplaseaza()
     {
         // Logic for moving
+        Pozitie = (Pozitie.x + Viteza, Pozitie.y + Viteza);
+        Console.WriteLine($"{Nume} s-a deplasat la pozitia ({Pozitie.x}, {Pozitie.y})");
     }
 }
 
 // Carnivore class
 public class Carnivor : Animal
 {
-    public Carnivor(string nume, int energie, (int x, int y) pozitie, double rataSupravietuire, int viteza)
-        : base(nume, energie, pozitie, rataSupravietuire, viteza, "Animale") { }
+    public Carnivor(string nume, int energie, (int x, int y) pozitie, double rataSupravietuire, int viteza, string gen)
+        : base(nume, energie, pozitie, rataSupravietuire, viteza, "Animale", gen) { }
 
     public override void Actioneaza()
     {
-        // Logic for carnivore actions
+        Mananca();
+        Deplaseaza();
     }
 
     public override void Mananca()
     {
-        // Logic for eating other animals
+        var erbivor = Ecosistem.Instance.GetEntitateAtPosition(Pozitie) as Erbivor;
+        if (erbivor != null)
+        {
+            Energie += erbivor.Energie;
+            Ecosistem.Instance.EliminaEntitate(erbivor);
+            Console.WriteLine($"{Nume} a mancat {erbivor.Nume} si acum are energie {Energie}");
+        }
     }
 
     public override void Deplaseaza()
     {
         // Logic for moving
+        Pozitie = (Pozitie.x + Viteza, Pozitie.y + Viteza);
+        Console.WriteLine($"{Nume} s-a deplasat la pozitia ({Pozitie.x}, {Pozitie.y})");
     }
 }
 
 // Omnivore class
 public class Omnivor : Animal
 {
-    public Omnivor(string nume, int energie, (int x, int y) pozitie, double rataSupravietuire, int viteza)
-        : base(nume, energie, pozitie, rataSupravietuire, viteza, "Plante si Animale") { }
+    public Omnivor(string nume, int energie, (int x, int y) pozitie, double rataSupravietuire, int viteza, string gen)
+        : base(nume, energie, pozitie, rataSupravietuire, viteza, "Plante si Animale", gen) { }
 
     public override void Actioneaza()
     {
-        // Logic for omnivore actions
+        Mananca();
+        Deplaseaza();
     }
 
     public override void Mananca()
     {
-        // Logic for eating plants and animals
+        var planta = Ecosistem.Instance.GetEntitateAtPosition(Pozitie) as Planta;
+        if (planta != null)
+        {
+            Energie += planta.Energie;
+            Ecosistem.Instance.EliminaEntitate(planta);
+            Console.WriteLine($"{Nume} a mancat {planta.Nume} si acum are energie {Energie}");
+        }
+        else
+        {
+            var erbivor = Ecosistem.Instance.GetEntitateAtPosition(Pozitie) as Erbivor;
+            if (erbivor != null)
+            {
+                Energie += erbivor.Energie;
+                Ecosistem.Instance.EliminaEntitate(erbivor);
+                Console.WriteLine($"{Nume} a mancat {erbivor.Nume} si acum are energie {Energie}");
+            }
+        }
     }
 
     public override void Deplaseaza()
     {
         // Logic for moving
+        Pozitie = (Pozitie.x + Viteza, Pozitie.y + Viteza);
+        Console.WriteLine($"{Nume} s-a deplasat la pozitia ({Pozitie.x}, {Pozitie.y})");
     }
 }
 
@@ -175,9 +214,14 @@ public class Ecosistem
         entitati.Remove(entitate);
     }
 
+    public EntitateEcosistem GetEntitateAtPosition((int x, int y) pozitie)
+    {
+        return entitati.FirstOrDefault(e => e.Pozitie == pozitie);
+    }
+
     public void SimuleazaPas()
     {
-        foreach (var entitate in entitati)
+        foreach (var entitate in entitati.ToList())
         {
             entitate.Actioneaza();
         }
@@ -221,5 +265,50 @@ public class Ecosistem
         {
             Console.WriteLine($"{entitate.Nume} la pozitia ({entitate.Pozitie.x}, {entitate.Pozitie.y}) cu energie {entitate.Energie}");
         }
+    }
+}
+
+// Simulation class to manage the simulation process
+public class Simulare
+{
+    private Ecosistem ecosistem;
+
+    public Simulare()
+    {
+        ecosistem = Ecosistem.Instance;
+    }
+
+    public void Initializeaza()
+    {
+        // Add initial entities to the ecosystem
+        ecosistem.AdaugaEntitate(new Planta("Floare", 10, (0, 0), 0.8));
+        ecosistem.AdaugaEntitate(new Erbivor("Iepure", 15, (1, 1), 0.7, 5, "Masculin"));
+        ecosistem.AdaugaEntitate(new Erbivor("Iepure", 15, (1, 1), 0.7, 5, "Feminin"));
+        ecosistem.AdaugaEntitate(new Carnivor("Lup", 20, (2, 2), 0.6, 7, "Masculin"));
+        ecosistem.AdaugaEntitate(new Omnivor("Urs", 25, (3, 3), 0.9, 4, "Feminin"));
+    }
+
+    public void Ruleaza(int pasi)
+    {
+        for (int i = 0; i < pasi; i++)
+        {
+            Console.WriteLine($"Pasul {i + 1}:");
+            ecosistem.SimuleazaPas();
+            ecosistem.AfiseazaStare();
+            Console.WriteLine();
+        }
+
+        ecosistem.GenereazaRaportFinal();
+    }
+}
+
+// Main program loop
+class Program
+{
+    static void Main(string[] args)
+    {
+        Simulare simulare = new Simulare();
+        simulare.Initializeaza();
+        simulare.Ruleaza(10); // Run the simulation for 10 steps
     }
 }
