@@ -56,7 +56,7 @@ public class Simulare
             ecosistem.SimuleazaPas();
             if (i % skip == 0)
             {
-                ecosistem.AfiseazaStare();
+                //ecosistem.AfiseazaStare();
                 Console.WriteLine();
             }
         }

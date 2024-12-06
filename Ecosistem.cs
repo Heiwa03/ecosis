@@ -1,4 +1,3 @@
-// Singleton Ecosystem class to manage entities and simulate interactions
 public class Ecosistem
 {
     private static Ecosistem instance;
