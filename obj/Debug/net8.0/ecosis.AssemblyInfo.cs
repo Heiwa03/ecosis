@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ecosis")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96263aea6e1b0c9a237702b78d072105183878e3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa2f483204a95fed58daca2100624ffd62b5558f")]
 [assembly: System.Reflection.AssemblyProductAttribute("ecosis")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ecosis")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
