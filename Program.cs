@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 // Abstract base class for all ecosystem entities
 public abstract class EntitateEcosistem
 {
