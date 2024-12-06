@@ -51,16 +51,34 @@ public class Ecosistem
 
     private void EvenimenteAleatorii()
     {
-        int eveniment = random.Next(0, 100);
+        int eveniment = random.Next(0, 4000);
         if (eveniment < 10)
         {
             Console.WriteLine("Furtuna a lovit ecosistemul!");
             // Logic for storm event
+            int numEntitiesToKill = random.Next(0, entitati.Count/2);
+            for (int i = 0; i < numEntitiesToKill; i++)
+            {
+                if (entitati.Count == 0) break;
+                int indexToKill = random.Next(0, entitati.Count);
+                var entity = entitati[indexToKill];
+                Console.WriteLine($"{entity.Nume} a fost ucis de furtuna!");
+                EliminaEntitate(entity);
+            }
         }
         else if (eveniment < 20)
         {
             Console.WriteLine("Seceta a lovit ecosistemul!");
             // Logic for drought event
+            int numEntitiesToKill = random.Next(0, entitati.Count/2);
+            for (int i = 0; i < numEntitiesToKill; i++)
+            {
+                if (entitati.Count == 0) break;
+                int indexToKill = random.Next(0, entitati.Count);
+                var entity = entitati[indexToKill];
+                Console.WriteLine($"{entity.Nume} a fost ucis de seceta!");
+                EliminaEntitate(entity);
+            }
         }
         else if (eveniment < 30)
         {
