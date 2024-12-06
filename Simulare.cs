@@ -48,13 +48,13 @@ public class Simulare
         return random.Next(0, 2) == 0 ? "Masculin" : "Feminin";
     }
 
-    public void Ruleaza(int pasi, int skip = 0)
+    public void Ruleaza(int pasi, int skip = 1)
     {
         for (int i = 0; i < pasi; i++)
         {
             Console.WriteLine($"Pasul {i + 1}:");
             ecosistem.SimuleazaPas();
-            if (i % skip == 1)
+            if (i % skip == 0)
             {
                 ecosistem.AfiseazaStare();
                 Console.WriteLine();
