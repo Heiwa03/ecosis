@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 // Abstract base class for all ecosystem entities
 public abstract class EntitateEcosistem
 {
@@ -26,7 +30,6 @@ public class Planta : EntitateEcosistem
     public override void Actioneaza()
     {
         Creste();
-        Reproduce();
     }
 
     private void Creste()
@@ -34,19 +37,6 @@ public class Planta : EntitateEcosistem
         // Logic for plant growth
         Energie += 5; // Example: increase energy by 5 units
         Console.WriteLine($"{Nume} a crescut si acum are energie {Energie}");
-    }
-
-    private void Reproduce()
-    {
-        // Logic for plant reproduction
-        if (Energie > 20) // Example: reproduce if energy is greater than 20
-        {
-            Energie -= 10; // Example: reduce energy by 10 units for reproduction
-            Console.WriteLine($"{Nume} s-a reprodus si acum are energie {Energie}");
-            // Add new plant to the ecosystem
-            var newPlanta = new Planta($"{Nume} Jr.", 10, Pozitie, RataSupravietuire);
-            Ecosistem.Instance.AdaugaEntitate(newPlanta);
-        }
     }
 }
 
@@ -94,8 +84,11 @@ public class Erbivor : Animal
 
     public override void Deplaseaza()
     {
-        // Logic for moving
-        Pozitie = (Pozitie.x + Viteza, Pozitie.y + Viteza);
+        // Logic for moving 1 unit in any direction
+        var random = new Random();
+        int dx = random.Next(-1, 2);
+        int dy = random.Next(-1, 2);
+        Pozitie = (Pozitie.x + dx, Pozitie.y + dy);
         Console.WriteLine($"{Nume} s-a deplasat la pozitia ({Pozitie.x}, {Pozitie.y})");
     }
 }
@@ -125,8 +118,11 @@ public class Carnivor : Animal
 
     public override void Deplaseaza()
     {
-        // Logic for moving
-        Pozitie = (Pozitie.x + Viteza, Pozitie.y + Viteza);
+        // Logic for moving 1 unit in any direction
+        var random = new Random();
+        int dx = random.Next(-1, 2);
+        int dy = random.Next(-1, 2);
+        Pozitie = (Pozitie.x + dx, Pozitie.y + dy);
         Console.WriteLine($"{Nume} s-a deplasat la pozitia ({Pozitie.x}, {Pozitie.y})");
     }
 }
@@ -166,8 +162,11 @@ public class Omnivor : Animal
 
     public override void Deplaseaza()
     {
-        // Logic for moving
-        Pozitie = (Pozitie.x + Viteza, Pozitie.y + Viteza);
+        // Logic for moving 1 unit in any direction
+        var random = new Random();
+        int dx = random.Next(-1, 2);
+        int dy = random.Next(-1, 2);
+        Pozitie = (Pozitie.x + dx, Pozitie.y + dy);
         Console.WriteLine($"{Nume} s-a deplasat la pozitia ({Pozitie.x}, {Pozitie.y})");
     }
 }
