@@ -35,7 +35,7 @@ To run the simulation, use the following command:
 The simulation will run for 10 steps by default. You can modify the number of steps in the Program.cs file.
 
 ## UML Diagram
-![Source](//www.plantuml.com/plantuml/png/hPFDRjim3CVlVWeTNMnvWs9eq6KVGBS5oR3Bi0DZim41YJ8eAWTtU_V9beqfCTeUbfEb7ob-_4tU1GNHw6m5Xw02ZPh6GWXcmqeAYfl61mgApZnLngnCSY8-cg_HuNWdrkIBSgHyhnDuEz0Ri_KzwOHR7myMpGuKzh4JE15g91cCRyp9KslMZP9dX1xgc-fFLUKojXPO8USUSptG8uOE-9c7oItJUy6WM98TTkBRs62EVz7lcic1BHBz8CKUofw_K_T9WC_OH-GNIli23DpakYRq7hkK3w4lQLdRQufiv40dB-Rflz8K0Uz1-BeHlxah1xmSmeTqkLrCw3k36T7ej0DklJCoVWfLMuX7c1_NYoX5BHjBZlXLtmLEKw4pNEisKINFzR_LA7BioKKxYB25K9UvJyZaa5E4P5OlH6UpyKYZT7i5mTAG1X9biEoWyw8VYC4MKkPy89YLB9J5-VIIU9-PbC1Il_XjkOcXnN9xnHy5tFaW4DTvUNx-6bsNyjt-NgscpN_EcjUrof-CfiKesJZR2pYDPtKHSbQccWyPJprKTyXjTFOl)
+![UML](https://github.com/Heiwa03/ecosis/blob/withtout-plot/image.png?raw=true)
 
 ## Project Structure
 - Ecosistem.cs: Manages the ecosystem and handles random events.
