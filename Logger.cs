@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using OxyPlot;
 using OxyPlot.Series;
-using OxyPlot.GtkSharp;
-using Gtk;
+using OxyPlot.Avalonia;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
 
 public class Logger
 {
@@ -36,7 +39,7 @@ public class Logger
     {
         var plotModel = new PlotModel { Title = "Ecosystem Actions" };
 
-        var scatterSeries = new ScatterSeries { MarkerType = MarkerType.Circle };
+        var scatterSeries = new OxyPlot.Series.ScatterSeries { MarkerType = MarkerType.Circle };
 
         foreach (var log in detailedLogs)
         {
@@ -50,16 +53,23 @@ public class Logger
             Model = plotModel
         };
 
-        var window = new Window("Ecosystem Actions Plot")
+        var window = new Window
         {
-            DefaultWidth = 800,
-            DefaultHeight = 600
+            Title = "Ecosystem Actions Plot",
+            Width = 800,
+            Height = 600,
+            Content = plotView
         };
 
-        window.Add(plotView);
-        window.ShowAll();
-        window.DeleteEvent += (o, args) => Application.Quit();
+        window.Show();
+        AppBuilder.Configure<App>().UsePlatformDetect().StartWithClassicDesktopLifetime(new string[0]);
+    }
+}
 
-        Application.Run();
+public class App : Application
+{
+    public override void Initialize()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }
