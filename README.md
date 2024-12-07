@@ -13,7 +13,7 @@ This project simulates an ecosystem with various entities such as plants, herbiv
 
 ### Prerequisites
 
-- [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 
 ### Installation
 
