@@ -1,0 +1,76 @@
+@startuml
+abstract class EntitateEcosistem {
+  - string Nume
+  - int Energie
+  - (int, int) Pozitie
+  - double RataSupravietuire
+  + void Actioneaza()
+}
+
+class Planta {
+  - int Lifespan
+  + void Actioneaza()
+  - void Creste()
+  - void Reproduce()
+}
+
+abstract class Animal {
+  - int Viteza
+  - string TipHrana
+  - string Gen
+  - int Lifespan
+  + void Mananca()
+  + void Deplaseaza()
+  + void Reproduce()
+  + void Actioneaza()
+}
+
+class Erbivor {
+  + void Mananca()
+  + void Deplaseaza()
+  + void Reproduce()
+}
+
+class Carnivor {
+  + void Mananca()
+  + void Deplaseaza()
+  + void Reproduce()
+}
+
+class Omnivor {
+  + void Mananca()
+  + void Deplaseaza()
+  + void Reproduce()
+}
+
+class Ecosistem {
+  - List<EntitateEcosistem> entitati
+  - Random random
+  + void AdaugaEntitate(EntitateEcosistem)
+  + void EliminaEntitate(EntitateEcosistem)
+  + EntitateEcosistem GetEntitateAtPosition((int, int))
+  + void SimuleazaPas()
+  + void EvenimenteAleatorii()
+  + void AfiseazaStare()
+  + void GenereazaRaportFinal()
+}
+
+class Simulare {
+  - Ecosistem ecosistem
+  - Random random
+  + void Initializeaza()
+  + void Ruleaza(int)
+}
+
+class Program {
+  + void Main(string[])
+}
+
+EntitateEcosistem <|-- Planta
+EntitateEcosistem <|-- Animal
+Animal <|-- Erbivor
+Animal <|-- Carnivor
+Animal <|-- Omnivor
+Ecosistem <|-- Simulare
+Simulare <|-- Program
+@enduml
